@@ -7,7 +7,59 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Meu Blog Pessoal</h1>
-    <p>Bem vindo!</p>
-</body>
+    <header class="header">
+        <div class="container">
+            <h1>Meu Blog Pessoal</h1>
+            <nav>
+                <a href="/">Início</a>
+                <a href="#">Sobre</a>
+                <a href="#">Contato</a>
+            </nav>
+        </div>
+    </header>    
+    
+    <main class="container">
+        <section class="intro">
+            <h2>Meus artigos</h2>
+            <p>
+                Pensamentos, projetos e coisas que estou aprendendo.
+            </p>
+        </section>
+
+        <section class="posts">
+            <article class="posts">
+                <h3>Como comecei a programar</h3>
+
+                <span class="date">22 de agosto de 2026</span>
+
+                <p>
+                    Este é o meu primeiro artigo do blog. Aqui vou compartilhar minha jornada aprendendo programação
+                </p>
+
+                <a href="#" class="read-more">
+                    Ler mais ->
+                </a>
+            </article>
+
+            <article class="posts">
+                <h3>Porque estou aprendendo Python?</h3>
+
+                <span class="date">22 de agosto de 2026</span>
+
+                <p>
+                    Python é uma das linguagens que estou estudando e utilizando para criar meus projetos.
+                </p>
+
+                <a href="#" class="read-more">
+                    Leia mais ->
+                </a>
+            </article>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <p>
+            © 2026 Meu Blog
+        </p>
+    </footer>
 </html>
