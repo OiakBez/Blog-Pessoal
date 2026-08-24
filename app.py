@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
 import sqlite3
 
 app = Flask(__name__)
@@ -49,6 +49,9 @@ def post(id):
     ).fetchone()
 
     conn.close()
+
+    if post is None:
+        abort(404)
 
     return render_template("post.html", post=post)
 
