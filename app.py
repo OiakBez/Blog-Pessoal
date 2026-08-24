@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort
+from flask import Flask, render_template, abort, request
 import sqlite3
 
 app = Flask(__name__)
@@ -54,6 +54,19 @@ def post(id):
         abort(404)
 
     return render_template("post.html", post=post)
+
+@app.route("/create-post", methods=["GET", "POST"])
+def create_post():
+
+    if request.method == "POST":
+        title = request.form["title"]
+        content = request.form["content"]
+
+        add_post(title, content)
+
+        return "Post criado com sucesso."
+
+    return render_template("create_post.html")
 
 if __name__ == "__main__":
     init_db()

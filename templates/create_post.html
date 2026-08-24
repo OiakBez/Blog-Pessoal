@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Novo Post</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="container">
+
+            <h1>Meu Blog</h1>
+
+            <nav>
+                <a href="/">Início</a>
+                <a href="#">Sobre</a>
+                <a href="#">Contato</a>
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <section class="intro">
+
+            <h2>Novo Post</h2>
+
+            <p>
+                Escreva um novo artigo para o blog.
+            </p>
+
+        </section>
+
+
+        <form method="POST">
+
+            <label for="title">
+                Título
+            </label>
+
+            <input
+                type="text"
+                id="title"
+                name="title"
+                required
+            >
+
+
+            <label for="content">
+                Conteúdo
+            </label>
+
+            <textarea
+                id="content"
+                name="content"
+                rows="15"
+                required
+            ></textarea>
+
+
+            <button type="submit">
+                Publicar
+            </button>
+
+        </form>
+
+    </main>
+
+
+    <footer class="footer">
+
+        <p>© 2026 Meu Blog</p>
+
+    </footer>
+
+</body>
+
+</html>
