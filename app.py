@@ -25,14 +25,33 @@ def init_db():
     conn.close()
 
 
+def add_post(title, content):
+    conn = get_db_connection()
+    conn.execute(
+        "INSERT INTO posts (title, content) VALUES (?, ?)",
+        (title, content)
+    )
+
+    conn.commit()
+    conn.close()
+
 @app.route("/")
 def home():
     return render_template("index.html")
 
 @app.route("/post/<int:id>")
 def post(id):
-    return render_template("post.html", post_id=id)
+    conn = get_db_connection()
+
+    post = conn.execute(
+        "SELECT * FROM posts WHERE id = ?",
+        (id,)
+    ).fetchone()
+
+    conn.close()
+
+    return render_template("post.html", post=post)
 
 if __name__ == "__main__":
     init_db()
-    app.run(debug=True)
+    app.run(debug=False)

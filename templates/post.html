@@ -34,19 +34,14 @@
 
         <article class="post">
 
-            <h2>Meu primeiro artigo. Post {{ post_id }}</h2>
+            <h2>{{ post["title"] }}</h2>
 
             <span class="date">
                 22 de agosto de 2026
             </span>
 
             <p>
-                Este é o conteúdo do meu primeiro artigo.
-            </p>
-
-            <p>
-                Estou aprendendo Flask e criando meu
-                próprio blog pessoal usando Python.
+                {{ post["content"] }}
             </p>
 
             <a href="/">
