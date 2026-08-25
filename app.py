@@ -81,6 +81,41 @@ def create_post():
 
     return render_template("create_post.html")
 
+@app.route("/edit-post", methods=["GET", "POST"])
+def edit_post(id):
+    conn = get_db_connection()
+    post = conn.execute(
+        "SELECT * FROM posts WHERE id = ?",
+        (id)
+    ).fetchone()
+
+    conn.close()
+
+    if post is None:
+        abort (404)
+
+    if request.method == "POST":
+
+        title = request.form["title"]
+        content = request.form["content"]
+
+        conn = get_db_connection()
+
+        conn.execute(
+            """
+            UPDATE posts
+            SET title = ?, content = ?
+            WHERE id = ?
+            """,
+            (title, content, id)
+        )
+
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("post", id=id))
+    return render_template("edit_post.html", post=post)
+
 if __name__ == "__main__":
     init_db()
     app.run(debug=False)
