@@ -81,7 +81,7 @@ def create_post():
 
     return render_template("create_post.html")
 
-@app.route("/edit-post", methods=["GET", "POST"])
+@app.route("/edit-post/<int:id>", methods=["GET", "POST"])
 def edit_post(id):
     conn = get_db_connection()
     post = conn.execute(
@@ -115,6 +115,20 @@ def edit_post(id):
 
         return redirect(url_for("post", id=id))
     return render_template("edit_post.html", post=post)
+
+@app.route("/delete-post/<int:id>", methods=["POST"])
+def delete_post(id):
+    conn = get_db_connection()
+
+    conn.execute(
+        "DELETE FROM posts WHERE id = ?",
+        (id)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("home"))
 
 if __name__ == "__main__":
     init_db()
