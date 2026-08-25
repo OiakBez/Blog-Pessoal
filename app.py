@@ -86,7 +86,7 @@ def edit_post(id):
     conn = get_db_connection()
     post = conn.execute(
         "SELECT * FROM posts WHERE id = ?",
-        (id)
+        (id,)
     ).fetchone()
 
     conn.close()
@@ -122,7 +122,7 @@ def delete_post(id):
 
     conn.execute(
         "DELETE FROM posts WHERE id = ?",
-        (id)
+        (id,)
     )
 
     conn.commit()
