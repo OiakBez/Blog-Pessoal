@@ -42,7 +42,15 @@ def add_post(title, content):
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    conn = get_db_connection()
+    
+    posts = conn.execute(
+        "SELECT * FROM posts ORDER BY id DESC"
+    ).fetchall()
+
+    conn.close()
+
+    return render_template("index.html", posts=posts)
 
 @app.route("/post/<int:id>")
 def post(id):
