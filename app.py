@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort, request
+from flask import Flask, render_template, abort, request, redirect, url_for
 import sqlite3
 
 app = Flask(__name__)
@@ -27,13 +27,18 @@ def init_db():
 
 def add_post(title, content):
     conn = get_db_connection()
-    conn.execute(
+    cursor = conn.execute(
         "INSERT INTO posts (title, content) VALUES (?, ?)",
         (title, content)
     )
 
     conn.commit()
+
+    post_id = cursor.lastrowid
+
     conn.close()
+
+    return post_id
 
 @app.route("/")
 def home():
@@ -62,9 +67,9 @@ def create_post():
         title = request.form["title"]
         content = request.form["content"]
 
-        add_post(title, content)
+        post_id = add_post(title, content)
 
-        return "Post criado com sucesso."
+        return redirect(url_for("post", id=post_id))
 
     return render_template("create_post.html")
 
