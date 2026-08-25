@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Post</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="container">
+
+            <h1>Meu Blog</h1>
+
+            <nav>
+                <a href="/">Início</a>
+                <a href="#">Sobre</a>
+                <a href="#">Contato</a>
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <section class="intro">
+
+            <h2>Editar Post</h2>
+
+        </section>
+
+
+        <form method="POST">
+
+            <label for="title">
+                Título
+            </label>
+
+            <input
+                type="text"
+                id="title"
+                name="title"
+                value="{{ post['title'] }}"
+                required
+            >
+
+
+            <label for="content">
+                Conteúdo
+            </label>
+
+            <textarea
+                id="content"
+                name="content"
+                rows="15"
+                required
+            >{{ post['content'] }}</textarea>
+
+
+            <button type="submit">
+                Salvar alterações
+            </button>
+
+        </form>
+
+    </main>
+
+
+    <footer class="footer">
+
+        <p>© 2026 Meu Blog</p>
+
+    </footer>
+
+</body>
+
+</html>
