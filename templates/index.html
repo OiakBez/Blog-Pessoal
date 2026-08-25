@@ -27,33 +27,20 @@
         </section>
 
         <section class="posts">
-            <article class="posts">
-                <h3>Como comecei a programar</h3>
+            {% for post in posts %}
 
-                <span class="date">22 de agosto de 2026</span>
+            <article class="posts">
+                <h3>{{post["title"]}}</h3>
 
                 <p>
-                    Este é o meu primeiro artigo do blog. Aqui vou compartilhar minha jornada aprendendo programação
+                    {{post["content"]}}
                 </p>
 
-                <a href="#" class="read-more">
+                <a href="{{url_for('post', id=post['id'])}}" class="read-more">
                     Ler mais ->
                 </a>
             </article>
-
-            <article class="posts">
-                <h3>Porque estou aprendendo Python?</h3>
-
-                <span class="date">22 de agosto de 2026</span>
-
-                <p>
-                    Python é uma das linguagens que estou estudando e utilizando para criar meus projetos.
-                </p>
-
-                <a href="#" class="read-more">
-                    Leia mais ->
-                </a>
-            </article>
+            {% endfor %}
         </section>
     </main>
     
