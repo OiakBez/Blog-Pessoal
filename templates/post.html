@@ -44,12 +44,13 @@
                 Editar post
             </a>
 
-            <form method="POST" action="{{ url_for('delete_post', id=post['id']) }}">
-                
+            <form method="POST"
+             action="{{ url_for('delete_post', id=post['id']) }}"
+             onsubmit="return confirm('Tem certeza que deseja excluir este post?');"
+             >
                 <button type="submit">
                     Excluir post
                 </button>
-
             </form>
 
             <a href="/">
