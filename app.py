@@ -1,7 +1,9 @@
-from flask import Flask, render_template, abort, request, redirect, url_for
+from flask import Flask, render_template, abort, request, redirect, url_for, session
 import sqlite3
 
 app = Flask(__name__)
+
+app.secret_key = "&@?SPbLwwrr])+WT"
 
 def get_db_connection():
     conn = sqlite3.connect("blog.db")
@@ -21,7 +23,33 @@ def init_db():
         )
     """)
 
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL
+        )
+    """)
+
     conn.commit()
+    conn.close()
+
+def create_admin():
+    conn = get_db_connection()
+
+    user = conn.execute(
+        "SELECT * FROM users WHERE username = ?",
+        ("admin",)
+    ).fetchone()
+
+    if user is None:
+        conn.execute(
+            "INSERT INTO users (username, password) VALUES (?, ?)",
+            ("admin", "1234")
+        )
+
+        conn.commit()
+
     conn.close()
 
 
@@ -132,4 +160,5 @@ def delete_post(id):
 
 if __name__ == "__main__":
     init_db()
+    create_admin()
     app.run(debug=False)
