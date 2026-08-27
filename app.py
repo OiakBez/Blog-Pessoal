@@ -158,6 +158,29 @@ def delete_post(id):
 
     return redirect(url_for("home"))
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        conn = get_db_connection()
+
+        user = conn.execute(
+            "SELECT * FROM users WHERE username = ?",
+            (username,)
+        ).fetchone()
+
+        conn.close()
+
+        if user is not None and user["password"] == password:
+            session["user_id"] = user["id"]
+
+            return redirect(url_for("home"))
+
+        return "Usuário ou senha incorretos."
+    return render_template("login.html")
+
 if __name__ == "__main__":
     init_db()
     create_admin()
