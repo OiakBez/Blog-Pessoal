@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort, request, redirect, url_for, session
+from flask import Flask, render_template, abort, request, redirect, url_for, session, flash
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
@@ -192,15 +192,21 @@ def login():
         if user is not None and check_password_hash(user["password"], password):
             
             session["user_id"] = user["id"]
+
+            flash("Login realizado com sucesso. Bem vindo!", "success")
+
             return redirect(url_for("home"))
 
-        return "Usuário ou senha incorretos."
+        flash("Usuário ou senha incorretos.", "error")
+        return redirect(url_for("login")) 
+    
     return render_template("login.html")
 
 @app.route("/logout")
 def logout():
     session.clear()
 
+    flash("Você saiu da sua conta.", "success")
     return redirect(url_for("home"))
 
 if __name__ == "__main__":
