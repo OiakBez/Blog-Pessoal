@@ -1,4 +1,5 @@
 from flask import Flask, render_template, abort, request, redirect, url_for, session
+from functools import wraps
 import sqlite3
 
 app = Flask(__name__)
@@ -68,6 +69,17 @@ def add_post(title, content):
 
     return post_id
 
+def login_required(f):
+
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+
+        if "user_id" not in session:
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+    
+    return decorated_function
+
 @app.route("/")
 def home():
     conn = get_db_connection()
@@ -97,6 +109,7 @@ def post(id):
     return render_template("post.html", post=post)
 
 @app.route("/create-post", methods=["GET", "POST"])
+@login_required
 def create_post():
 
     if request.method == "POST":
@@ -110,6 +123,7 @@ def create_post():
     return render_template("create_post.html")
 
 @app.route("/edit-post/<int:id>", methods=["GET", "POST"])
+@login_required
 def edit_post(id):
     conn = get_db_connection()
     post = conn.execute(
@@ -145,6 +159,7 @@ def edit_post(id):
     return render_template("edit_post.html", post=post)
 
 @app.route("/delete-post/<int:id>", methods=["POST"])
+@login_required
 def delete_post(id):
     conn = get_db_connection()
 
@@ -180,6 +195,12 @@ def login():
 
         return "Usuário ou senha incorretos."
     return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+
+    return redirect(url_for("home"))
 
 if __name__ == "__main__":
     init_db()
