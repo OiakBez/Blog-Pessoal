@@ -45,15 +45,15 @@ def create_admin():
     ).fetchone()
 
     if user is None:
+        password_hash = generate_password_hash("1234")
         conn.execute(
             "INSERT INTO users (username, password) VALUES (?, ?)",
-            ("admin", "1234")
+            ("admin", password_hash)
         )
 
         conn.commit()
 
     conn.close()
-
 
 def add_post(title, content):
     conn = get_db_connection()
@@ -189,9 +189,9 @@ def login():
 
         conn.close()
 
-        if user is not None and user["password"] == password:
+        if user is not None and check_password_hash(user["password"], password):
+            
             session["user_id"] = user["id"]
-
             return redirect(url_for("home"))
 
         return "Usuário ou senha incorretos."
