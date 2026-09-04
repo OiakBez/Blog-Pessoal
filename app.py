@@ -1,7 +1,16 @@
 from flask import Flask, render_template, abort, request, redirect, url_for, session, flash
 from functools import wraps
 from werkzeug.security import check_password_hash
-from database import get_db_connection, init_db, create_admin
+from database import (
+    get_db_connection,
+    init_db,
+    create_admin,
+    get_all_posts,
+    get_post,
+    add_post,
+    update_post,
+    delete_post as delete_post_db
+)
 
 app = Flask(__name__)
 
@@ -58,29 +67,16 @@ def inject_user():
 
 @app.route("/")
 def home():
-    conn = get_db_connection()
-    
-    posts = conn.execute(
-        "SELECT * FROM posts ORDER BY id DESC"
-    ).fetchall()
-
-    conn.close()
+    posts = get_all_posts()
 
     return render_template("index.html", posts=posts)
 
 @app.route("/post/<int:id>")
 def post(id):
-    conn = get_db_connection()
-
-    post = conn.execute(
-        "SELECT * FROM posts WHERE id = ?",
-        (id,)
-    ).fetchone()
-
-    conn.close()
+    post = get_post(id)
 
     if post is None:
-        abort(404)
+        return "Post não encontrado.", 404
 
     return render_template("post.html", post=post)
 
@@ -101,35 +97,16 @@ def create_post():
 @app.route("/edit-post/<int:id>", methods=["GET", "POST"])
 @login_required
 def edit_post(id):
-    conn = get_db_connection()
-    post = conn.execute(
-        "SELECT * FROM posts WHERE id = ?",
-        (id,)
-    ).fetchone()
-
-    conn.close()
+    post = get_post(id)
 
     if post is None:
-        abort (404)
+        return "Post não encontrado.", 404
 
     if request.method == "POST":
-
         title = request.form["title"]
         content = request.form["content"]
 
-        conn = get_db_connection()
-
-        conn.execute(
-            """
-            UPDATE posts
-            SET title = ?, content = ?
-            WHERE id = ?
-            """,
-            (title, content, id)
-        )
-
-        conn.commit()
-        conn.close()
+        update_post(id, title, content)
 
         return redirect(url_for("post", id=id))
     return render_template("edit_post.html", post=post)
@@ -137,15 +114,7 @@ def edit_post(id):
 @app.route("/delete-post/<int:id>", methods=["POST"])
 @login_required
 def delete_post(id):
-    conn = get_db_connection()
-
-    conn.execute(
-        "DELETE FROM posts WHERE id = ?",
-        (id,)
-    )
-
-    conn.commit()
-    conn.close()
+    delete_post_db(id)
 
     return redirect(url_for("home"))
 
