@@ -32,7 +32,9 @@
                 <a href="#">Sobre</a>
                 <a href="#">Contato</a>
 
-                {% if session.get("user_id") %}
+                {% if user %}
+                    <span>Olá, {{ user["username"] }}!</span>
+                    
                     <a href="{{url_for('create_post')}}">Novo post</a>
                     <a href="{{url_for('logout')}}">Sair</a>
 
