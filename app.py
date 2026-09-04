@@ -1,52 +1,11 @@
 from flask import Flask, render_template, abort, request, redirect, url_for, session, flash
 from functools import wraps
-from werkzeug.security import generate_password_hash, check_password_hash
-from database import get_db_connection
+from werkzeug.security import check_password_hash
+from database import get_db_connection, init_db, create_admin
 
 app = Flask(__name__)
 
 app.secret_key = "&@?SPbLwwrr])+WT"
-
-def init_db():
-    conn = get_db_connection()
-
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS posts (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            content TEXT NOT NULL
-        )
-    """)
-
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL UNIQUE,
-            password TEXT NOT NULL
-        )
-    """)
-
-    conn.commit()
-    conn.close()
-
-def create_admin():
-    conn = get_db_connection()
-
-    user = conn.execute(
-        "SELECT * FROM users WHERE username = ?",
-        ("admin",)
-    ).fetchone()
-
-    if user is None:
-        password_hash = generate_password_hash("1234")
-        conn.execute(
-            "INSERT INTO users (username, password) VALUES (?, ?)",
-            ("admin", password_hash)
-        )
-
-        conn.commit()
-
-    conn.close()
 
 def add_post(title, content):
     conn = get_db_connection()
