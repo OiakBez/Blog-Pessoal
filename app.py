@@ -1,18 +1,11 @@
 from flask import Flask, render_template, abort, request, redirect, url_for, session, flash
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
-import sqlite3
+from database import get_db_connection
 
 app = Flask(__name__)
 
 app.secret_key = "&@?SPbLwwrr])+WT"
-
-def get_db_connection():
-    conn = sqlite3.connect("blog.db")
-    conn.row_factory = sqlite3.Row
-
-    return conn
-
 
 def init_db():
     conn = get_db_connection()
