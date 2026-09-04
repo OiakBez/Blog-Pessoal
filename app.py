@@ -97,6 +97,13 @@ def get_current_user():
 
     return user
 
+@app.context_processor
+def inject_user():
+
+    return {
+        "user": get_current_user()
+    }
+
 @app.route("/")
 def home():
     conn = get_db_connection()
