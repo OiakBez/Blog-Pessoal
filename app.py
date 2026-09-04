@@ -81,6 +81,22 @@ def login_required(f):
     
     return decorated_function
 
+def get_current_user():
+
+    if "user_id" not in session:
+        return None
+
+    conn = get_db_connection()
+
+    user = conn.execute(
+        "SELECT * FROM users WHERE id = ?",
+        (session["user_id"],)
+    ).fetchone()
+
+    conn.close()
+
+    return user
+
 @app.route("/")
 def home():
     conn = get_db_connection()
