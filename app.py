@@ -9,7 +9,9 @@ from database import (
     get_post,
     add_post,
     update_post,
-    delete_post as delete_post_db
+    delete_post as delete_post_db,
+    get_user_by_id,
+    get_user_by_username
 )
 
 app = Flask(__name__)
@@ -47,16 +49,7 @@ def get_current_user():
     if "user_id" not in session:
         return None
 
-    conn = get_db_connection()
-
-    user = conn.execute(
-        "SELECT * FROM users WHERE id = ?",
-        (session["user_id"],)
-    ).fetchone()
-
-    conn.close()
-
-    return user
+    return get_user_by_id(session["user_id"])
 
 @app.context_processor
 def inject_user():
@@ -124,14 +117,8 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-        conn = get_db_connection()
-
-        user = conn.execute(
-            "SELECT * FROM users WHERE username = ?",
-            (username,)
-        ).fetchone()
-
-        conn.close()
+        
+        user = get_user_by_username(username)
 
         if user is not None and check_password_hash(user["password"], password):
             

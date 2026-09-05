@@ -102,3 +102,27 @@ def delete_post(post_id):
 
     conn.commit()
     conn.close()
+
+def get_user_by_username(username):
+    conn = get_db_connection()
+
+    user = conn.execute(
+        "SELECT * FROM users WHERE username = ?",
+        (username,)
+    ).fetchone()
+
+    conn.close()
+
+    return user
+
+def get_user_by_id(id):
+    conn = get_db_connection()
+
+    user = conn.execute(
+        "SELECT * FROM users WHERE id = ?",
+        (id,)
+    ).fetchone()
+
+    conn.close()
+
+    return user
