@@ -1,3 +1,8 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from werkzeug.security import generate_password_hash
 import sqlite3
 
@@ -38,10 +43,13 @@ def create_admin():
     ).fetchone()
 
     if user is None:
-        password_hash = generate_password_hash("1234")
+        username = os.getenv("ADMIN_USERNAME")
+        password = os.getenv("ADMIN_PASSWORD")
+
+        password_hash = generate_password_hash(password)
         conn.execute(
             "INSERT INTO users (username, password) VALUES (?, ?)",
-            ("admin", password_hash)
+            (username, password_hash)
         )
 
         conn.commit()
