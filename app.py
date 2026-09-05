@@ -1,3 +1,8 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from flask import Flask, render_template, abort, request, redirect, url_for, session, flash
 from functools import wraps
 from werkzeug.security import check_password_hash
@@ -15,6 +20,8 @@ from database import (
 )
 
 app = Flask(__name__)
+
+app.secret_key = os.getenv('SECRET_KEY')
 
 def add_post(title, content):
     conn = get_db_connection()
