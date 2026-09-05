@@ -16,8 +16,6 @@ from database import (
 
 app = Flask(__name__)
 
-app.secret_key = "&@?SPbLwwrr])+WT"
-
 def add_post(title, content):
     conn = get_db_connection()
     cursor = conn.execute(
