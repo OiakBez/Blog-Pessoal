@@ -19,7 +19,8 @@ def init_db():
         CREATE TABLE IF NOT EXISTS posts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
-            content TEXT NOT NULL
+            content TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
 
@@ -32,6 +33,31 @@ def init_db():
     """)
 
     conn.commit()
+    conn.close()
+
+def add_created_at_column():
+    conn = get_db_connection()
+
+    columns = conn.execute(
+        "PRAGMA table_info(posts)"
+    ).fetchall()
+
+    column_names = [column["name"] for column in columns]
+
+    if "created_at" not in column_names:
+        conn.execute("""
+            ALTER TABLE posts
+            ADD COLUMN created_at TEXT
+        """)
+
+        conn.execute("""
+            UPDATE posts
+            SET created_at = CURRENT_TIMESTAMP
+            WHERE created_at IS NULL
+        """)
+
+        conn.commit()
+
     conn.close()
 
 def create_admin():
