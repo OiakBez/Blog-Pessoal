@@ -1,3 +1,29 @@
+#FUNÇÃO DE TESTE PARA PREENCHER DADOS ANTIGOS SEM DATA
+# def add_created_at_column():
+#     conn = get_db_connection()
+
+#     columns = conn.execute(
+#         "PRAGMA table_info(posts)"
+#     ).fetchall()
+
+#     column_names = [column["name"] for column in columns]
+
+#     if "created_at" not in column_names:
+#         conn.execute("""
+#             ALTER TABLE posts
+#             ADD COLUMN created_at TEXT
+#         """)
+
+#         conn.execute("""
+#             UPDATE posts
+#             SET created_at = CURRENT_TIMESTAMP
+#             WHERE created_at IS NULL
+#         """)
+
+#         conn.commit()
+
+#     conn.close()
+
 import os
 from dotenv import load_dotenv
 
@@ -33,31 +59,6 @@ def init_db():
     """)
 
     conn.commit()
-    conn.close()
-
-def add_created_at_column():
-    conn = get_db_connection()
-
-    columns = conn.execute(
-        "PRAGMA table_info(posts)"
-    ).fetchall()
-
-    column_names = [column["name"] for column in columns]
-
-    if "created_at" not in column_names:
-        conn.execute("""
-            ALTER TABLE posts
-            ADD COLUMN created_at TEXT
-        """)
-
-        conn.execute("""
-            UPDATE posts
-            SET created_at = CURRENT_TIMESTAMP
-            WHERE created_at IS NULL
-        """)
-
-        conn.commit()
-
     conn.close()
 
 def create_admin():
@@ -107,7 +108,7 @@ def get_post(post_id):
 def add_post(title, content):
     conn = get_db_connection()
 
-    cursor = conn.execute(
+    conn.execute(
         "INSERT INTO posts (title, content) VALUES (?, ?)",
         (title, content)
     )

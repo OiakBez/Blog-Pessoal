@@ -9,7 +9,6 @@ from werkzeug.security import check_password_hash
 from database import (
     get_db_connection,
     init_db,
-    add_created_at_column,
     create_admin,
     get_all_posts,
     get_post,
@@ -148,6 +147,5 @@ def logout():
 
 if __name__ == "__main__":
     init_db()
-    add_created_at_column()
     create_admin()
     app.run(debug=False)
