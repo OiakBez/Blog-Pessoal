@@ -59,8 +59,10 @@
             <article class="posts">
                 <h3>{{post["title"]}}</h3>
 
+                <small>{{ post["created_at"] }}</small>
+
                 <p>
-                    {{post["content"]}}
+                    {{ post["content"] }}
                 </p>
 
                 <a href="{{url_for('post', id=post['id'])}}" class="read-more">
