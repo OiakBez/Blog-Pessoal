@@ -59,7 +59,9 @@
             <article class="posts">
                 <h3>{{post["title"]}}</h3>
 
-                <small>{{ post["created_at"] }}</small>
+                <small>
+                    {{ post["created_at"] | format_datetime }}
+                </small>
 
                 <p>
                     {{ post["content"] }}

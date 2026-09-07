@@ -5,6 +5,8 @@ load_dotenv()
 
 from flask import Flask, render_template, abort, request, redirect, url_for, session, flash
 from functools import wraps
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 from werkzeug.security import check_password_hash
 from database import (
     get_db_connection,
@@ -62,6 +64,17 @@ def inject_user():
     return {
         "user": get_current_user()
     }
+
+@app.template_filter("format_datetime")
+def format_datetime(value):
+    if not value:
+        return ""
+
+    dt = datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
+    dt = dt.replace(tzinfo=timezone.utc)
+    dt = dt.astimezone(ZoneInfo("America/Recife"))
+
+    return dt.strftime("%d/%m/%Y às %H:%M")
 
 @app.route("/")
 def home():
