@@ -239,3 +239,35 @@ nav a:hover {
     font-size: 16px;
     color: #ccc;
 }
+
+/* PÁGINA 404 */
+
+.error-page {
+    text-align: center;
+    padding: 100px 0;
+}
+
+.error-page h2 {
+    font-size: 100px;
+    margin-bottom: 10px;
+}
+
+.error-page h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.error-page p {
+    color: #aaa;
+    margin-bottom: 30px;
+}
+
+.error-page a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.error-page a:hover {
+    text-decoration: underline;
+}

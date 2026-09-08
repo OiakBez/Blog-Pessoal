@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página não encontrada - Meu Blog</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    
+    <header class="header">
+
+        <div class="container">
+
+            <h1>Meu Blog</h1>
+
+            <nav>
+                <a href="{{ url_for('home') }}">Início</a>
+                <a href="#">Sobre</a>
+                <a href="#">Contato</a>
+            </nav>
+
+        </div>
+
+    </header>
+
+    <main class="container">
+        <div class="error-page">
+            <h2>404</h2>
+
+            <h3>Página não encontrada</h3>
+
+            <p>O conteúdo que você está procurando não existe ou foi removido.</p>
+
+            <a href="{{ url_for('home') }}">← Voltar para o início</a>
+        </div>
+    </main>
+
+
+    <footer class="footer">
+        <p>© 2026 Meu Blog</p>
+    </footer>
+
+</body>
+</html>
