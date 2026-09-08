@@ -45,6 +45,12 @@
         </div>
     </header>    
     
+    <form action="{{ url_for('search') }}" method="GET" class="search-form">
+        <input type="text" name="q" placeholder="Pesquisar posts..." value="{{ search_query or '' }}">
+
+        <button type="submit">Buscar</button>
+    </form>
+
     <main class="container">
         <section class="intro">
             <h2>Meus artigos</h2>

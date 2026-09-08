@@ -14,6 +14,7 @@ from database import (
     init_db,
     create_admin,
     get_all_posts,
+    search_posts,
     get_posts_count,
     get_post,
     add_post,
@@ -138,6 +139,17 @@ def delete_post(id):
     delete_post_db(id)
 
     return redirect(url_for("home"))
+
+@app.route("/search")
+def search():
+    query = request.args.get("q", "").strip()
+
+    posts = []
+
+    if query:
+        posts = search_posts(query)
+
+    return render_template("index.html", posts=posts,page=1, total_pages=1, search_query=query)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

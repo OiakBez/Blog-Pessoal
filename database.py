@@ -98,6 +98,22 @@ def get_all_posts(limit, offset):
     conn.close()
     return posts
 
+def search_posts(query):
+    conn = get_db_connection()
+
+    posts = conn.execute(
+        """
+        SELECT * FROM posts
+        WHERE title LIKE ?
+        ORDER BY id DESC
+        """,
+        (f"%{query}%",)
+    ).fetchall()
+
+    conn.close()
+
+    return posts
+
 def get_posts_count():
     conn = get_db_connection()
 
