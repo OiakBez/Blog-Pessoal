@@ -51,6 +51,16 @@
         <button type="submit">Buscar</button>
     </form>
 
+    {% if search_query %}
+        <div class="search-info">
+            <p>
+                Resultados para: <strong>{{ search_query }}</strong>
+            </p>
+
+            <a href="{{ url_for('home') }}">Ver todos os posts</a>
+        </div>
+    {% endif %}
+
     <main class="container">
         <section class="intro">
             <h2>Meus artigos</h2>

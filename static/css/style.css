@@ -209,3 +209,21 @@ nav a:hover {
     font-size: 18px;
     opacity: 0.7;
 }
+
+.search-info {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.search-info p {
+    margin-bottom: 10px;
+}
+
+.search-info a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.search-info a:hover {
+    opacity: 0.7;
+}

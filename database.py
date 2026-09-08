@@ -101,13 +101,16 @@ def get_all_posts(limit, offset):
 def search_posts(query):
     conn = get_db_connection()
 
+    search_term = f"%{query}%"
+
     posts = conn.execute(
         """
         SELECT * FROM posts
         WHERE title LIKE ?
+            OR content LIKE ?
         ORDER BY id DESC
         """,
-        (f"%{query}%",)
+        (search_term, search_term)
     ).fetchall()
 
     conn.close()
