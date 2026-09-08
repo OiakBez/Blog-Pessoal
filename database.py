@@ -83,11 +83,16 @@ def create_admin():
 
     conn.close()
 
-def get_all_posts():
+def get_all_posts(limit, offset):
     conn = get_db_connection()
 
     posts = conn.execute(
-        "SELECT * FROM posts ORDER BY id DESC"
+        """
+        SELECT * FROM posts
+        ORDER BY id DESC
+        LIMIT ? OFFSET ?
+        """,
+        (limit, offset)
     ).fetchall()
 
     conn.close()

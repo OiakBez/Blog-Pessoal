@@ -78,9 +78,14 @@ def format_datetime(value):
 
 @app.route("/")
 def home():
-    posts = get_all_posts()
+    page = request.args.get("page", 1, type=int)
 
-    return render_template("index.html", posts=posts)
+    posts_per_page = 5
+    offset = (page - 1) * posts_per_page
+
+    posts = get_all_posts(posts_per_page, offset)
+
+    return render_template("index.html", posts=posts, page=page)
 
 @app.route("/post/<int:id>")
 def post(id):
