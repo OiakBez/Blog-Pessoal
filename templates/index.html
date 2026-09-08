@@ -60,6 +60,12 @@
         </section>
 
         <section class="posts">
+            {% if search_query and not posts %}
+                <p class="no-results">
+                    Nenhum post encontrado para "{{ search_query }}"
+                </p>
+            {% endif %}
+
             {% for post in posts %}
 
             <article class="posts">

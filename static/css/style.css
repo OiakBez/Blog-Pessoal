@@ -202,3 +202,10 @@ nav a:hover {
 .search-form button:hover {
     opacity: 0.75;
 }
+
+.no-results {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 18px;
+    opacity: 0.7;
+}
