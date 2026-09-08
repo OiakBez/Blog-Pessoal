@@ -143,3 +143,28 @@ nav a:hover {
     margin-bottom: 20px;
     border: 1px solid;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: inherit;
+    padding: 8px 14px;
+    border: 1px solid currentColor;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.pagination a:hover {
+    opacity: 0.7;
+}
+
+.pagination span {
+    font-weight: bold;
+}
