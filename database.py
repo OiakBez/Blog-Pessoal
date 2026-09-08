@@ -98,6 +98,17 @@ def get_all_posts(limit, offset):
     conn.close()
     return posts
 
+def get_posts_count():
+    conn = get_db_connection()
+
+    count = conn.execute(
+        "SELECT COUNT(*) FROM posts"
+    ).fetchone()[0]
+
+    conn.close()
+
+    return count
+
 def get_post(post_id):
     conn = get_db_connection()
 

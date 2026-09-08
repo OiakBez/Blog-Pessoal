@@ -1,4 +1,5 @@
 import os
+import math
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -13,6 +14,7 @@ from database import (
     init_db,
     create_admin,
     get_all_posts,
+    get_posts_count,
     get_post,
     add_post,
     update_post,
@@ -85,7 +87,10 @@ def home():
 
     posts = get_all_posts(posts_per_page, offset)
 
-    return render_template("index.html", posts=posts, page=page)
+    total_posts = get_posts_count()
+    total_pages = math.ceil(total_posts/posts_per_page)
+
+    return render_template("index.html", posts=posts, page=page, total_pages=total_pages)
 
 @app.route("/post/<int:id>")
 def post(id):

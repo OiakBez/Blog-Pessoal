@@ -74,10 +74,31 @@
             {% endfor %}
         </section>
     </main>
-    
+
+    <div class="pagination">
+
+        {% if page > 1 %}
+            <a href="{{ url_for('home', page=page - 1) }}">
+                ← Anterior
+            </a>
+        {% endif %}
+
+        <span>
+            Página {{page}} de {{ total_pages }}
+        </span>
+
+        {% if page < total_pages %}
+            <a href="{{ url_for('home', page=page + 1) }}">
+                Próxima →
+            </a>
+        {% endif %}
+
+    </div>
+
     <footer class="footer">
         <p>
             © 2026 Meu Blog
         </p>
     </footer>
+</body>
 </html>
