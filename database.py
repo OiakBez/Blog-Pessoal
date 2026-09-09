@@ -64,15 +64,15 @@ def init_db():
 def create_admin():
     conn = get_db_connection()
 
+    username = os.getenv("ADMIN_USERNAME")
+    password = os.getenv("ADMIN_PASSWORD")
+
     user = conn.execute(
         "SELECT * FROM users WHERE username = ?",
-        ("admin",)
+        (username,)
     ).fetchone()
 
     if user is None:
-        username = os.getenv("ADMIN_USERNAME")
-        password = os.getenv("ADMIN_PASSWORD")
-
         password_hash = generate_password_hash(password)
         conn.execute(
             "INSERT INTO users (username, password) VALUES (?, ?)",
