@@ -95,7 +95,7 @@ def create_post():
         title = request.form["title"].strip()
         content = request.form["content"].strip()
 
-        if not title and not content:
+        if not title or not content:
             flash("Título e conteúdo são obrigatórios.", "error")
             return redirect(request.referrer or url_for("home"))
 
@@ -114,8 +114,8 @@ def edit_post(id):
         return "Post não encontrado.", 404
 
     if request.method == "POST":
-        title = request.form["title"]
-        content = request.form["content"]
+        title = request.form["title"].strip()
+        content = request.form["content"].strip()
 
         if not title or not content:
             flash("Título e conteúdo são obrigatórios.", "error")
