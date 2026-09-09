@@ -143,13 +143,18 @@ def get_post(post_id):
 def add_post(title, content):
     conn = get_db_connection()
 
-    conn.execute(
+    cursor = conn.execute(
         "INSERT INTO posts (title, content) VALUES (?, ?)",
         (title, content)
     )
 
     conn.commit()
+
+    post_id = cursor.lastrowid
+
     conn.close()
+
+    return post_id
 
 def update_post(post_id, title, content):
     conn = get_db_connection()

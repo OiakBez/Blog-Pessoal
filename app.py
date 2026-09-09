@@ -28,21 +28,6 @@ app = Flask(__name__)
 
 app.secret_key = os.getenv('SECRET_KEY')
 
-def add_post(title, content):
-    conn = get_db_connection()
-    cursor = conn.execute(
-        "INSERT INTO posts (title, content) VALUES (?, ?)",
-        (title, content)
-    )
-
-    conn.commit()
-
-    post_id = cursor.lastrowid
-
-    conn.close()
-
-    return post_id
-
 def login_required(f):
 
     @wraps(f)
@@ -107,8 +92,12 @@ def post(id):
 def create_post():
 
     if request.method == "POST":
-        title = request.form["title"]
-        content = request.form["content"]
+        title = request.form["title"].strip()
+        content = request.form["content"].strip()
+
+        if not title and not content:
+            flash("Título e conteúdo são obrigatórios.", "error")
+            return redirect(request.referrer or url_for("home"))
 
         post_id = add_post(title, content)
 
