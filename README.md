@@ -1,23 +1,36 @@
 # Blog Pessoal
 
-Um blog pessoal desenvolvido com **Python e Flask**, criado com o objetivo de praticar desenvolvimento web, banco de dados, autenticação e organização de projetos.
-
-## Tecnologias
-
-* Python
-* Flask
-* SQLite
-* HTML
-* CSS
-* Git e GitHub
+Um blog desenvolvido com Python e Flask, permitindo criar, editar, excluir e pesquisar posts.
 
 ## Funcionalidades
 
-* Visualização de posts
-* Criação, edição e exclusão de posts
-* Sistema de login
-* Autenticação com sessão
-* Senhas armazenadas com hash
-* Banco de dados SQLite
+- Sistema de login
+- Criação de posts
+- Edição e exclusão
+- Pesquisa
+- Paginação
+- Datas automáticas
+- Página 404 personalizada
+- Proteção de rotas
+- Senhas criptografadas
 
-> Projeto desenvolvido para fins de estudo e aprendizado em desenvolvimento web com Python.
+## Tecnologias
+
+- Python
+- Flask
+- SQLite
+- HTML
+- CSS
+- Jinja2
+
+## Instalação
+
+```bash
+git clone <repositorio>
+cd Blog-Pessoal
+
+python -m venv venv
+
+venv\Scripts\activate
+
+pip install -r requirements.txt
