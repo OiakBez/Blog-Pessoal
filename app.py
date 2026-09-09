@@ -74,7 +74,7 @@ def home():
     posts = get_all_posts(posts_per_page, offset)
 
     total_posts = get_posts_count()
-    total_pages = math.ceil(total_posts/posts_per_page)
+    total_pages = max(1, math.ceil(total_posts/posts_per_page))
 
     return render_template("index.html", posts=posts, page=page, total_pages=total_pages)
 
@@ -83,7 +83,7 @@ def post(id):
     post = get_post(id)
 
     if post is None:
-        return "Post não encontrado.", 404
+        abort(404)
 
     return render_template("post.html", post=post)
 
@@ -111,7 +111,7 @@ def edit_post(id):
     post = get_post(id)
 
     if post is None:
-        return "Post não encontrado.", 404
+        abort(404)
 
     if request.method == "POST":
         title = request.form["title"].strip()
@@ -147,7 +147,7 @@ def search():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        username = request.form["username"]
+        username = request.form["username"].strip()
         password = request.form["password"]
 
         
