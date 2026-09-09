@@ -117,6 +117,10 @@ def edit_post(id):
         title = request.form["title"]
         content = request.form["content"]
 
+        if not title or not content:
+            flash("Título e conteúdo são obrigatórios.", "error")
+            return redirect(request.referrer or url_for("home"))
+
         update_post(id, title, content)
 
         return redirect(url_for("post", id=id))
