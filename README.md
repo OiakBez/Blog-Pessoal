@@ -2,6 +2,8 @@
 
 Um blog desenvolvido com Python e Flask, permitindo criar, editar, excluir e pesquisar posts.
 
+Link do projeto no ar: https://blog-pessoal-u1mx.onrender.com
+
 ## Funcionalidades
 
 - Sistema de login
